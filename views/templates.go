@@ -28,3 +28,10 @@ func (t Template) Execute(w http.ResponseWriter, data interface{}) {
 		http.Error(w, "Error while executing template", http.StatusInternalServerError)
 	}
 }
+
+func Must(t Template, err error) Template {
+	if err != nil {
+		panic(err)
+	}
+	return t
+}
