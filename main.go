@@ -13,13 +13,13 @@ import (
 func main() {
 	r := chi.NewRouter()
 
-	tpl := views.Must(views.ParseFS(templates.FS, "home.html"))
+	tpl := views.Must(views.ParseFS(templates.FS, "layout-page.html", "home.html"))
 	r.Get("/", controllers.StaticHandler(tpl))
 
-	tpl = views.Must(views.ParseFS(templates.FS, "about.html"))
+	tpl = views.Must(views.ParseFS(templates.FS, "layout-page.html", "about.html"))
 	r.Get("/about", controllers.StaticHandler(tpl))
 
-	tpl = views.Must(views.ParseFS(templates.FS, "faq.html"))
+	tpl = views.Must(views.ParseFS(templates.FS, "layout-page.html", "faq.html"))
 	r.Get("/faq", controllers.FAQ(tpl))
 
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {
