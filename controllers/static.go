@@ -25,6 +25,10 @@ func FAQ(tpl Template) http.HandlerFunc {
 			Answer:   "We have support staff available for 24/7, though response times may be a bit slower.",
 		},
 		{
+			Question: "",
+			Answer:   "",
+		},
+		{
 			Question: "How do I contact support?",
 			Answer:   `Email us - <a href="mailto:support@lenslocked.com">support@lenslocked.com</a>`,
 		},

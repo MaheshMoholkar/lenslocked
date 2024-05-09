@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/MaheshMoholkar/lenslocked/controllers"
@@ -25,11 +24,11 @@ func main() {
 	uc := controllers.Users{}
 	uc.Templates.New = views.Must(views.ParseFS(templates.FS, "layout-page.html", "signup.html"))
 	r.Get("/signup", uc.New)
+	r.Post("/users", uc.Create)
 
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Page not found", http.StatusNotFound)
 	})
 
-	fmt.Print("Server started:3000\n")
 	http.ListenAndServe(":3000", r)
 }
