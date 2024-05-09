@@ -5,18 +5,20 @@
       href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
     />
   </head>
-  <body>
+  <body class="min-h-screen bg-gray-100">
     <header class="bg-gradient-to-r from-blue-800 to-indigo-800 text-white">
       <nav class="px-8 py-6 flex items-center">
         <div class="text-4xl pr-8 font-serif">Lenslocked</div>
         <div class="flex-grow text-lg font-semibold">
           <a href="/" class="hover:text-blue-100 pr-8">Home</a>
-          <a href="/" class="hover:text-blue-100 pr-8">Contact</a>
-          <a href="/" class="hover:text-blue-100 pr-8">FAQ</a>
+          <a href="/contact" class="hover:text-blue-100 pr-8">Contact</a>
+          <a href="/faq" class="hover:text-blue-100 pr-8">FAQ</a>
         </div>
         <div>
-          <a href="" class="pr-4">Sign In</a>
-          <a href="" class="px-4 py-2 bg-blue-700 hover:bg-blue-600 rounded"
+          <a href="/signin" class="pr-4">Sign In</a>
+          <a
+            href="/signup"
+            class="px-4 py-2 bg-blue-700 hover:bg-blue-600 rounded"
             >Sign Up</a
           >
         </div>
