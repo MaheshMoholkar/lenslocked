@@ -3,7 +3,7 @@ version: '3.9'
 services:
   db:
     image: postgres
-    restart: always
+    restart: no
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: root
@@ -13,7 +13,7 @@ services:
   
   adminer:
     image: adminer
-    restart: always
+    restart: no
     environment:
       ADMINER_DESIGN: dracula
     ports:
