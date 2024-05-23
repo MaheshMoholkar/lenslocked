@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/MaheshMoholkar/lenslocked/controllers"
+	"github.com/MaheshMoholkar/lenslocked/models"
 	"github.com/MaheshMoholkar/lenslocked/templates"
 	"github.com/MaheshMoholkar/lenslocked/views"
 	"github.com/go-chi/chi/v5"
@@ -21,7 +22,20 @@ func main() {
 	tpl = views.Must(views.ParseFS(templates.FS, "layout-page.html", "faq.html"))
 	r.Get("/faq", controllers.FAQ(tpl))
 
-	uc := controllers.Users{}
+	cfg := models.DefaultPostgresConfig()
+	db, err := models.Open(cfg)
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+	us := models.UserService{
+		DB: db,
+	}
+
+	uc := controllers.Users{
+		UserService: &us,
+	}
+
 	uc.Templates.New = views.Must(views.ParseFS(templates.FS, "layout-page.html", "signup.html"))
 	r.Get("/signup", uc.New)
 	r.Post("/users", uc.Create)
