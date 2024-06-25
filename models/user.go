@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"fmt"
 	"strings"
 
 	"golang.org/x/crypto/bcrypt"
@@ -38,5 +39,24 @@ func (us *UserService) Create(email, password string) (*User, error) {
 	if err != nil {
 		return nil, err
 	}
+	return &user, nil
+}
+
+func (us *UserService) Authenticate(email, password string) (*User, error) {
+	email = strings.ToLower(email)
+	user := User{
+		Email: email,
+	}
+	row := us.DB.QueryRow(`
+	SELECT id, password_hash FROM users WHERE email=$1`, email)
+	err := row.Scan(&user.ID, &user.PasswordHash)
+	if err != nil {
+		return nil, err
+	}
+	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(password))
+	if err != nil {
+		return nil, err
+	}
+	fmt.Println("Authenticated!")
 	return &user, nil
 }

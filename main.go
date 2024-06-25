@@ -9,6 +9,7 @@ import (
 	"github.com/MaheshMoholkar/lenslocked/templates"
 	"github.com/MaheshMoholkar/lenslocked/views"
 	"github.com/go-chi/chi/v5"
+	"github.com/gorilla/csrf"
 )
 
 func main() {
@@ -38,16 +39,17 @@ func main() {
 	}
 
 	uc.Templates.New = views.Must(views.ParseFS(templates.FS, "layout-page.html", "signup.html"))
-	r.Get("/signup", uc.New)
-
 	uc.Templates.SignIn = views.Must(views.ParseFS(templates.FS, "layout-page.html", "signin.html"))
+
+	r.Get("/signup", uc.New)
 	r.Get("/signin", uc.SignIn)
 	r.Post("/users", uc.Create)
-
+	r.Post("/signin", uc.ProcessSignIn)
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Page not found", http.StatusNotFound)
 	})
-
+	csrfKey := "gFvi35R4fy5xNBlnEeZtQbfAVCYeIAUC"
+	csrfMw := csrf.Protect([]byte(csrfKey), csrf.Secure(false))
 	fmt.Println("server started:3000")
-	http.ListenAndServe(":3000", r)
+	http.ListenAndServe(":3000", csrfMw(r))
 }
